@@ -22,7 +22,6 @@ module Tarea1
   , miMap
   , miFilter
   , miFoldl
-  , conve
   ) where
 
 import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
@@ -60,9 +59,18 @@ leerHora (d1:d2:p:m1:m2:f)
 leerHora _ = Left "formato inválido"
 
 
+date2Mim :: Either String (Int, Int) -> Either String Int
+date2Mim (Right (x,y)) = Right (x * 60 + y)
+date2Mim (Left a) = Left a
 
 duracion :: String -> String -> Either String Int
-duracion = undefined
+duracion a b = case (date2Mim(leerHora a), date2Mim(leerHora b)) of
+    (Right x, Right y) 
+        | x > y -> Right ((1440 - x) + y)
+        | x <= y -> Right (y - x)
+    (Left x, Left y) -> Left x
+    (Left x, Right y) -> Left x
+    (Right x, Left y) -> Left y
 
 -- =====================================================================
 -- Parte B: orden superior.

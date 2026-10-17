@@ -56,9 +56,28 @@ esPalindromo a = ( minimizar (compactar a) == minimizar (compactar (miReverse a)
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
 -- lista una sola vez:
---
+-- el unico que hace la recursion es mayorYmenor, es decir, es el unico que hace
+-- el loop para recorrer la lista del primer elemento al ultimo; cuando llega al ultimo
+-- se va devolviendo el par y se va comparando en funciones separadas la cabeza de ese
+-- entoces con el correspondiente elemento que voy llevando
+
+mn :: Ord a => a -> Maybe (a, a) -> a
+mn a (Just b) 
+    | a > snd b = snd b
+    | a < snd b = a
+    | otherwise = a
+
+my :: Ord a => a -> Maybe (a, a) -> a
+my a (Just b)
+    | a > fst b = a
+    | a < fst b = fst b
+    | otherwise = a
+
+-- soy la mera verga nojoda (odio los valoress nuneables)
 mayorYMenor :: Ord a => [a] -> Maybe (a, a)
-mayorYMenor = undefined
+mayorYMenor [] = Nothing
+mayorYMenor (x:[]) = Just (x,x) 
+mayorYMenor (x:xs) = Just (my x (mayorYMenor xs), mn x (mayorYMenor xs))
 
 conve :: Char -> Char -> Int
 conve a b = (digitToInt a * 10) + (digitToInt b)

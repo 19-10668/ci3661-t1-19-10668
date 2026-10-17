@@ -120,7 +120,7 @@ promedioSobreUmbral = undefined
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo = undefined
+movimientosCaballo (x,y) = [(a,b) | (a,b) <- [(x-2,y-1), (x-2,y+1), (x-1,y-2), (x-1,y+2), (x+1,y-2), (x+1,y+2), (x+2,y-1), (x+2,y+1)], a > 0, b > 0, a < 9, b < 9]
 
 enDosSaltos :: (Int, Int) -> Int
 enDosSaltos = undefined

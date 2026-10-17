@@ -32,9 +32,16 @@ import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 -- maximum, minimum, all, any y cualquier otra función de orden superior.
 -- =====================================================================
 
+
+-- se me habia ocurrido separar el arreglo en x : z : y donde la x y y serian cabeza y cola
+-- entonces compararia x con y, pero me parecio complicado hacerlo entonces hice un reverse a mano y ya
+miReverse :: String -> String
+miReverse [] = []
+miReverse (x:xs) = miReverse (xs) ++ [x]
 -- A1
 esPalindromo :: String -> Bool
-esPalindromo = undefined
+esPalindromo [] = False
+esPalindromo a = (a == miReverse a)
 
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la

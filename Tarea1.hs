@@ -38,10 +38,20 @@ import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 miReverse :: String -> String
 miReverse [] = []
 miReverse (x:xs) = miReverse (xs) ++ [x]
+
+compactar :: String -> String
+compactar [] = []
+compactar (x:xs) 
+    | isAlphaNum x = [x] ++ compactar xs
+    | not (isAlphaNum x) = compactar xs 
+
+minimizar :: String -> String
+minimizar [] = []
+minimizar (x:xs) = [toLower x] ++ minimizar xs
 -- A1
 esPalindromo :: String -> Bool
-esPalindromo [] = False
-esPalindromo a = (a == miReverse a)
+esPalindromo [] = True
+esPalindromo a = ( minimizar (compactar a) == minimizar (compactar (miReverse a)))
 
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la

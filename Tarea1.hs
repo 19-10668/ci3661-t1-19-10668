@@ -1,10 +1,10 @@
 -- =====================================================================
 --  CI-3661 — Tarea 1 (Haskell) — Septiembre–Diciembre 2026
 --
---  Nombre:
---  Carnet:
+--  Nombre: Gaston Garcia
+--  Carnet: 19-10668
 --
---  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
+--  Declaración de uso de herramientas de IA (obligatoria, ver enunciado): ninguno
 --
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
@@ -22,6 +22,7 @@ module Tarea1
   , miMap
   , miFilter
   , miFoldl
+  , conve
   ) where
 
 import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
@@ -43,9 +44,22 @@ esPalindromo = undefined
 mayorYMenor :: Ord a => [a] -> Maybe (a, a)
 mayorYMenor = undefined
 
+conve :: Char -> Char -> Int
+conve a b = (digitToInt a * 10) + (digitToInt b)
+
 -- A3
 leerHora :: String -> Either String (Int, Int)
-leerHora = undefined
+leerHora z 
+  | length z /= 5 = Left "formato inválido"
+leerHora (d1:d2:p:m1:m2:f)
+  | not (isDigit d1 && isDigit d2 && isDigit m1 && isDigit m2) = Left "formato inválido"
+  | p /= ':' || f /= [] = Left "formato inválido"
+  | conve d1 d2 > 24 = Left "hora fuera de rango"
+  | conve m1 m2 > 60 = Left "minutos fuera de rango"
+  | otherwise = Right (conve d1 d2, conve m1 m2)
+leerHora _ = Left "formato inválido"
+
+
 
 duracion :: String -> String -> Either String Int
 duracion = undefined
@@ -76,3 +90,12 @@ miFilter = undefined
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
 miFoldl = undefined
+
+
+-- borrable
+
+main = do
+  putStrLn("pruebas:")
+
+  putStrLn( show (leerHora "20:44"))
+

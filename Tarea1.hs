@@ -119,11 +119,24 @@ promedioSobreUmbral :: Double -> [Double] -> Maybe Double
 promedioSobreUmbral = undefined
 
 -- B2
+-- yo imagino que se pondra siempre el caballo dentro del tablero pero bueno, por si a las moscas dejamos
+-- las restricciones finales
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo (x,y) = [(a,b) | (a,b) <- [(x-2,y-1), (x-2,y+1), (x-1,y-2), (x-1,y+2), (x+1,y-2), (x+1,y+2), (x+2,y-1), (x+2,y+1)], a > 0, b > 0, a < 9, b < 9]
+movimientosCaballo (x,y) = [(a,b) | (a,b) <- [(x-2,y-1), (x-2,y+1), (x-1,y-2), (x-1,y+2), (x+1,y-2), (x+1,y+2), (x+2,y-1), (x+2,y+1)], a > 0, b > 0, a < 9, b < 9, x > 0, y > 0, x < 9, y < 9]
 
 enDosSaltos :: (Int, Int) -> Int
-enDosSaltos = undefined
+enDosSaltos (x,y) = 
+    let l = foldl (++) [] (map movimientosCaballo (movimientosCaballo (x,y)))
+    in length ( foldr (\x acc -> if (elem x acc) then acc else x : acc ) [] l )
+
+-- estas dos funciones son para debuggear, y ademas vienen de un intento fallido antes de que menterara de la existencia de elem
+aV :: (Int, Int) -> [(Int, Int)]
+aV (x,y) = 
+    let l = foldl (++) [] (map movimientosCaballo (movimientosCaballo (x,y)))
+    in  foldr (\x acc -> if elem x acc then acc else x : acc ) [] l 
+
+comp :: [(Int, Int)] -> (Int, Int) -> Int
+comp l (a,b) =  length (filter (== True) (map (== (a,b)) l))
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]

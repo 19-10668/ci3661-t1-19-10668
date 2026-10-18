@@ -89,8 +89,8 @@ leerHora z
 leerHora (d1:d2:p:m1:m2:f)
   | not (isDigit d1 && isDigit d2 && isDigit m1 && isDigit m2) = Left "formato inválido"
   | p /= ':' || f /= [] = Left "formato inválido"
-  | conve d1 d2 > 24 = Left "hora fuera de rango"
-  | conve m1 m2 > 60 = Left "minutos fuera de rango"
+  | conve d1 d2 >= 24 = Left "hora fuera de rango"
+  | conve m1 m2 >= 60 = Left "minutos fuera de rango"
   | otherwise = Right (conve d1 d2, conve m1 m2)
 leerHora _ = Left "formato inválido"
 
@@ -150,7 +150,7 @@ miMap f l = foldr (\y acc -> f y : acc) [] l
 
 miFilter :: (a -> Bool) -> [a] -> [a]
 miFilter _ [] = []
-miFilter f l = foldr (\y acc -> if (f y) then acc else y : acc) [] l
+miFilter f l = foldr (\y acc -> if not (f y) then acc else y : acc) [] l
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
 miFoldl f z xs = foldr step id xs z

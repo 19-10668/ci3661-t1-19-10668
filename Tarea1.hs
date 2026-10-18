@@ -117,7 +117,9 @@ duracion a b = case (date2Mim(leerHora a), date2Mim(leerHora b)) of
 -- B1
 promedioSobreUmbral :: Double -> [Double] -> Maybe Double
 promedioSobreUmbral _ [] = Nothing
-promedioSobreUmbral u l = Just ((\(h,j) -> h / j) (foldr (\x (acc, b) -> if x <= u then (acc, b) else (acc + x, b + 1)) (0,0) l))
+promedioSobreUmbral u l 
+    | foldr (max) 0 l <= u = Nothing
+    | otherwise = Just ((\(h,j) -> h / j) (foldr (\x (acc, b) -> if x <= u then (acc, b) else (acc + x, b + 1)) (0,0) l)) 
 
 -- B2
 -- yo imagino que se pondra siempre el caballo dentro del tablero pero bueno, por si a las moscas dejamos

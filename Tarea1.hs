@@ -146,7 +146,8 @@ miMap _ [] = []
 miMap f l = foldr (\y acc -> f y : acc) [] l  
 
 miFilter :: (a -> Bool) -> [a] -> [a]
-miFilter = undefined
+miFilter _ [] = []
+miFilter f l = foldr (\y acc -> if (f y) then acc else y : acc) [] l
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
 miFoldl = undefined

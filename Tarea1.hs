@@ -137,10 +137,13 @@ aV (x,y) =
 
 comp :: [(Int, Int)] -> (Int, Int) -> Int
 comp l (a,b) =  length (filter (== True) (map (== (a,b)) l))
+--
+
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
-miMap = undefined
+miMap _ [] = []
+miMap f l = foldr (\y acc -> f y : acc) [] l  
 
 miFilter :: (a -> Bool) -> [a] -> [a]
 miFilter = undefined
@@ -148,11 +151,4 @@ miFilter = undefined
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
 miFoldl = undefined
 
-
--- borrable
-
-main = do
-  putStrLn("pruebas:")
-
-  putStrLn( show (leerHora "20:44"))
 
